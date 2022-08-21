@@ -8,3 +8,7 @@ export enum Routes {
   UploadBalance = "upload-balance",
   ViewBalance = "view-balance"
 }
+
+export enum Endpoints {
+  Auth = "auth"
+}

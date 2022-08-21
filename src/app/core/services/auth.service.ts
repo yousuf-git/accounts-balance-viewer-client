@@ -6,6 +6,7 @@ import {CookieService} from "ngx-cookie-service";
 import {catchError, Observable, tap, throwError} from "rxjs";
 import {Router} from "@angular/router";
 import {User} from "../models/entities/user";
+import {Endpoints} from "../constants";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class AuthService {
   }
 
   public auth(username: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>('https://localhost:7029/auth', <AuthRequest>{
+    return this.http.post<AuthResponse>(Endpoints.Auth, <AuthRequest>{
       username: username,
       password: password
     }).pipe(
