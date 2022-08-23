@@ -10,5 +10,6 @@ export enum Routes {
 }
 
 export enum Endpoints {
-  Auth = "auth"
+  Auth = "auth",
+  FetchAccounts = "accounts"
 }
