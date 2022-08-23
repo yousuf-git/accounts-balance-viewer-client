@@ -7,6 +7,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {CommonInterceptor} from "./core/interceptors/common.interceptor";
+import {ErrorInterceptor} from "./core/interceptors/error.interceptor";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,11 @@ import {CommonInterceptor} from "./core/interceptors/common.interceptor";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CommonInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true
     }
   ],
