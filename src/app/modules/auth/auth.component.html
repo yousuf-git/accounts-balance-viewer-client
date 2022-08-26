@@ -1,9 +1,24 @@
-<form [formGroup]="authForm" (ngSubmit)="onSubmit()">
-  <label for="name">Name: </label>
-  <input id="name" type="text" [formControl]="authForm.controls.username">
+<div class="container page">
+  <mat-card class="card-panel card-container">
+    <div class="card-panel-header">
+      <h1 class="title">Sign in</h1>
+    </div>
 
-  <label for="password">Password: </label>
-  <input id="password" type="text" [formControl]="authForm.controls.password">
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput [formControl]="authForm.controls.username">
+      </mat-form-field>
 
-  <button type="submit" [disabled]="!authForm.valid">Submit</button>
-</form>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [formControl]="authForm.controls.password">
+      </mat-form-field>
+
+      <button class="submit-button" mat-flat-button color="accent" type="submit" [disabled]="!authForm.valid">
+        Submit
+      </button>
+    </form>
+
+  </mat-card>
+</div>
