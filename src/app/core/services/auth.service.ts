@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {AuthRequest} from "../models/requests/auth-request";
 import {AuthResponse} from "../models/responses/auth-response";
 import {CookieService} from "ngx-cookie-service";
-import {catchError, Observable, tap, throwError} from "rxjs";
+import {BehaviorSubject, catchError, Observable, tap, throwError} from "rxjs";
 import {Router} from "@angular/router";
 import {User} from "../models/entities/user";
 import {Endpoints} from "../constants";
@@ -17,6 +17,8 @@ export class AuthService {
 
   private _userData?: User;
 
+  public authStateChanged = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient, private cookie: CookieService, private router: Router) {
     const token = this.cookie.get(this._authTokenKey);
     const userData = localStorage.getItem(this._userDataKey);
@@ -26,6 +28,7 @@ export class AuthService {
     }
 
     this._userData = JSON.parse(userData);
+    this.authStateChanged.next(this.isAuthenticated());
   }
 
   public auth(username: string, password: string): Observable<AuthResponse> {
@@ -46,6 +49,7 @@ export class AuthService {
 
         this._userData = user;
         localStorage.setItem(this._userDataKey, JSON.stringify(user));
+        this.authStateChanged.next(true);
       }),
       catchError(err => {
         this.revokeAuth();
@@ -75,5 +79,6 @@ export class AuthService {
   private revokeAuth() {
     this.cookie.delete(this._authTokenKey);
     localStorage.removeItem(this._userDataKey);
+    this.authStateChanged.next(false);
   }
 }
