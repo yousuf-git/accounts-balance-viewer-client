@@ -1,10 +1,14 @@
 
-name: Angular CI
+name: Angular Test and Build CI
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
-
+    types: [ opened, synchronize, reopened ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -12,20 +16,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
-          
         with:
+          path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-          
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
       - name: npm install and npm run CI commands
         run: |
           npm i
