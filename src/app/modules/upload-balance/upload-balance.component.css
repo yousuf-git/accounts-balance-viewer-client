@@ -1,0 +1,83 @@
+.container {
+  box-sizing: border-box;
+}
+
+.drop-area {
+  border: 3px dashed #dadada;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  box-sizing: border-box;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.card {
+  width: 100%;
+  background: rgba(49, 226, 43, 0.05);
+  box-sizing: border-box;
+}
+
+.card.invalid {
+  background: rgba(255, 0, 0, 0.18);
+}
+
+.card-name {
+  font-size: 18px;
+  display: block;
+  margin-bottom: 18px;
+}
+
+.card-amount {
+  font-size: 25px;
+  font-weight: 500;
+  display: block;
+}
+
+.card-delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.upload-icon {
+  width: 40px;
+  margin-bottom: 15px;
+}
+
+.or-text {
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.browse-files-button {
+  border-radius: 6px;
+  font-weight: 500;
+  background: rgb(3, 155, 229);
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 15px;
+  color: white;
+}
+
+.drag-enter {
+  border-color: #a2a2a2;
+  background: #fafafa;
+}
+
+.upload-button {
+  margin: auto;
+  display: block;
+}

@@ -1,1 +1,56 @@
-<p>upload-balance works!</p>
+<div class="container page">
+  <mat-card class="card-panel upload-panel">
+    <div class="card-panel-header">
+      <span class="title">Upload Balances</span>
+    </div>
+
+    <div class="drop-area" (click)="fileUploadControl.click()" (dragover)="$event.preventDefault()"
+         (dragenter)="onDragStart($event)" (drop)="onDrop($event)" (dragend)="onDragEnd($event)">
+      <div>
+        <img class="upload-icon" src="assets/upload.png">
+        <p>Drop your text or excel file here.
+        <p class="or-text">OR</p>
+        <div class="browse-files-button">Browse files</div>
+      </div>
+    </div>
+
+    <input type="file" accept="text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden
+           #fileUploadControl (click)="fileUploadControl.value = ''" (change)="onFileUpload($event)">
+  </mat-card>
+
+  <br><br>
+
+  <div #reviewCard>
+    <mat-card *ngIf="importedAccounts.length !== 0" class="card-panel review-panel">
+      <div class="card-panel-header">
+        <span class="title">Review</span>
+        <p class="subtitle">Review your account balances and hit upload.</p>
+      </div>
+
+      <span *ngIf="allowUpload" class="alert success">
+        <mat-icon>check_outline</mat-icon>
+        <span>You can upload</span>
+      </span>
+
+      <span *ngIf="!allowUpload" class="alert warn">
+        <mat-icon>info_outline</mat-icon>
+        <span>Found invalid accounts, please remove them to proceed upload.</span>
+      </span>
+
+      <div class="card-container">
+        <mat-card class="card" [ngClass]="{'invalid': !account.valid }"
+                  *ngFor="let account of importedAccounts; let i = index">
+          <span class="card-name">{{ account.name }}</span>
+          <span class="card-amount">{{ account.balance | currency }}</span>
+          <button mat-icon-button class="card-delete-button" (click)="removeImportedAccount(i)" *ngIf="!account.valid">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-card>
+      </div>
+
+      <button class="upload-button" mat-flat-button color="accent" (click)="onSubmit()" [disabled]="!allowUpload">
+        Upload
+      </button>
+    </mat-card>
+  </div>
+</div>
