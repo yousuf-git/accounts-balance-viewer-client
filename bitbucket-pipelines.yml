@@ -1,5 +1,8 @@
-image: node:16.17.0
+image: node:16.13.2
 
+options:
+  docker: true
+  size: 2x
 pipelines:
   branches:
     '{main}':
@@ -16,11 +19,14 @@ pipelines:
                 export CHROME_BIN=/usr/bin/google-chrome
             - npm run test:ci
             - npm run build
-          artifacts:
-            - dist/**
+  custom:
+    deploy:
       - step:
           name: Deploy to Azure
           deployment: test
+          services:
+            - docker
+          size: 2x
           script:
             - pipe: microsoft/azure-static-web-apps-deploy:main
               variables:
