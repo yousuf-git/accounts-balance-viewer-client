@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serverHost: 'https://localhost:7029/'
+  serverHost: 'https://accounts-balance-viewer-api-core.azurewebsites.net/'
 };
