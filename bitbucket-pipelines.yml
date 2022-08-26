@@ -16,3 +16,14 @@ pipelines:
                 export CHROME_BIN=/usr/bin/google-chrome
             - npm run test:ci
             - npm run build
+          artifacts:
+            - dist/**
+      - step:
+          name: Deploy to Azure
+          deployment: test
+          script:
+            - pipe: microsoft/azure-static-web-apps-deploy:main
+              variables:
+                APP_LOCATION: '$BITBUCKET_CLONE_DIR'
+                OUTPUT_LOCATION: '$BITBUCKET_CLONE_DIR/dist/angular-basic'
+                API_TOKEN: deployment_token
