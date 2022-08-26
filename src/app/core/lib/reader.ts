@@ -4,6 +4,6 @@ export type Cell = string | number | boolean | typeof Date;
 
 export type Row = Cell[];
 
-export interface TextReader {
+export interface Reader {
   read(file: File): Observable<Row[]>
 }
