@@ -1,0 +1,22 @@
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 60px;
+}
+
+.card {
+  width: 100%;
+  background: rgba(49, 226, 43, 0.05);
+}
+
+.card-name {
+  font-size: 18px;
+  display: block;
+  margin-bottom: 18px;
+}
+
+.card-amount {
+  font-size: 25px;
+  font-weight: 500;
+  display: block;
+}
