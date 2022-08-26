@@ -18,7 +18,7 @@
 
       <span class="spacer"></span>
 
-      <button mat-icon-button *ngIf="authSerivce.authStateChanged | async" [matMenuTriggerFor]="menu"
+      <button mat-icon-button *ngIf="_authSerivce.authStateChanged | async" [matMenuTriggerFor]="menu"
               aria-label="Example icon-button with a menu">
         <mat-icon>menu</mat-icon>
       </button>

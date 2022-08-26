@@ -27,7 +27,10 @@ describe('ErrorInterceptor', () => {
     })))
 
     // act
-    interceptor.intercept(request, fakeHttpHandler).subscribe();
+    interceptor.intercept(request, fakeHttpHandler).subscribe({
+      error: _ => {
+      }
+    });
 
     // assert
     expect(fakeAuthService.signOut).toHaveBeenCalledTimes(1);
@@ -40,7 +43,10 @@ describe('ErrorInterceptor', () => {
     })))
 
     // act
-    interceptor.intercept(request, fakeHttpHandler).subscribe();
+    interceptor.intercept(request, fakeHttpHandler).subscribe({
+      error: _ => {
+      }
+    });
 
     // assert
     expect(fakeAuthService.signOut).toHaveBeenCalledTimes(0);

@@ -10,14 +10,14 @@ export class NavbarComponent implements OnInit {
 
   @Output() signOut = new EventEmitter<void>();
 
-  constructor(public authSerivce: AuthService) {
+  constructor(public _authSerivce: AuthService) {
   }
 
   ngOnInit(): void {
   }
 
   public onSignOut() {
-    this.authSerivce.signOut();
+    this._authSerivce.signOut();
   }
 
 }
