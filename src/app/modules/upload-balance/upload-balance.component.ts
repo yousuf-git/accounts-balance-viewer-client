@@ -122,6 +122,10 @@ export class UploadBalanceComponent implements OnInit {
         return [false, `Expected ${2} columns, received ${row.length} columns`];
       }
 
+      if (typeof row[0] !== "string") {
+        return [false, `Found an invalid value for the account at row ${i + 1}`];
+      }
+
       if (typeof row[1] !== "number") {
         return [false, `Found an invalid value for the balance at row ${i + 1}`];
       }
