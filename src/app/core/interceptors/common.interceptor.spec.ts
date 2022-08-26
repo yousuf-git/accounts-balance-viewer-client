@@ -2,7 +2,7 @@ import {CommonInterceptor} from './common.interceptor';
 import {CookieService} from "ngx-cookie-service";
 import {HttpHandler, HttpRequest} from "@angular/common/http";
 import {of} from "rxjs";
-import {environment} from "../../../environments/environment.prod";
+import {environment} from "../../../environments/environment";
 
 describe('CommonInterceptor', () => {
   let fakeCookieService: jasmine.SpyObj<CookieService>;
