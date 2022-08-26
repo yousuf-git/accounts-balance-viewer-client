@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Endpoints} from "../constants";
 import {Observable} from "rxjs";
 import {GetAccountsResponse} from "../models/responses/get-accounts-response";
+import {Entry} from "../models/entities/entry";
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,9 @@ export class CoreService {
     return this.http.get<GetAccountsResponse>(Endpoints.FetchAccounts, {
       params: params
     });
+  }
+
+  public addEntries(entries: Entry[]): Observable<{}> {
+    return this.http.post(Endpoints.AddEntries, entries);
   }
 }
