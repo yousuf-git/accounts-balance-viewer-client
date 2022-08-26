@@ -1,0 +1,10 @@
+.root-wrapper {
+
+}
+
+.container {
+  background: #f1f1f1;
+  min-height: calc(100vh - 130px);
+  padding: 50px 0;
+  box-sizing: border-box;
+}

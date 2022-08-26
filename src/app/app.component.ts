@@ -1,7 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "./core/services/auth.service";
-import {Router} from "@angular/router";
-import {Routes} from "./core/constants";
 
 @Component({
   selector: 'app-root',
@@ -10,15 +7,10 @@ import {Routes} from "./core/constants";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private _authService: AuthService, private _router: Router) {
+  constructor() {
   }
 
   ngOnInit(): void {
-  }
-
-  public onLogout() {
-    this._authService.signOut();
-    this._router.navigate([Routes.Auth]);
   }
 
 }
