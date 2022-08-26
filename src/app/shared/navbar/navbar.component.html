@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="page">
+    <mat-toolbar class="tool-bar">
+      <div>
+        <div class="logo-container">
+          <img src="assets/currency.png" class="logo">
+          <span>Accounts Balance Viewer</span>
+        </div>
+        <div>
+          <a [routerLink]="['view-balance']" routerLinkActive="active">
+            Account Balances
+          </a>
+          <a [routerLink]="['upload-balance']" routerLinkActive="active">
+            Upload Balances
+          </a>
+        </div>
+      </div>
+
+      <span class="spacer"></span>
+
+      <button mat-icon-button *ngIf="_authSerivce.authStateChanged | async" [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <button (click)="onSignOut()" mat-menu-item>
+          <mat-icon>logout</mat-icon>
+          <span>Sign out</span>
+        </button>
+      </mat-menu>
+
+    </mat-toolbar>
+  </div>
+</div>

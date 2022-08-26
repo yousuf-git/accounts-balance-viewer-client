@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  background: rgb(3, 155, 229);
+  height: 130px;
+  padding-bottom: 14px;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.tool-bar {
+  background: transparent;
+  color: white;
+  height: max-content;
+}
+
+.logo {
+  width: 35px;
+  margin-right: 8px;
+}
+
+.logo-container {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  margin-right: 5px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: .3s;
+}
+
+a:hover {
+  color: rgba(255, 255, 255, 0.83);
+}
+
+a.active {
+  background: white;
+  color: black;
+}

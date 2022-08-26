@@ -1,0 +1,13 @@
+<mat-card class="card-panel page">
+  <div class="card-panel-header">
+    <span class="title">Account Balances</span>
+    <span class="subtitle">as at {{ todayDate | date }}</span>
+  </div>
+
+  <div class="card-container">
+    <mat-card class="card" *ngFor="let account of accounts">
+      <span class="card-name">{{ account.name }}</span>
+      <span class="card-amount">{{ account.balance | currency }}</span>
+    </mat-card>
+  </div>
+</mat-card>
