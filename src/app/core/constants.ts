@@ -6,13 +6,18 @@ export enum UserRole {
 export enum Routes {
   Auth = 'auth',
   UploadBalance = 'upload-balance',
-  ViewBalance = 'view-balance'
+  ViewBalance = 'view-balance',
+  Reports = 'reports'
 }
 
 export enum Endpoints {
   Auth = 'auth',
   FetchAccounts = 'accounts',
-  AddEntries = 'entries'
+  AddEntries = 'entries',
+  FetchMonthlyInflowOutflowStats = 'stats/balance-change-by-months',
+  FetchAnnualInflowOutflowStats = 'stats/balance-change-by-years',
+  FetchMonthlyAccumulationStats = 'stats/balance-by-months',
+  FetchAnnualAccumulationStats = 'stats/balance-by-years'
 }
 
 export enum Mime {

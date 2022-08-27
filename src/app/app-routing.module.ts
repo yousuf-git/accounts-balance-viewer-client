@@ -25,6 +25,14 @@ const routes: Routes = [
     }
   },
   {
+    path: RouteKeys.Reports,
+    loadChildren: () => import('./modules/reports/reports.module').then(mod => mod.ReportsModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: [UserRole.Admin]
+    }
+  },
+  {
     path: '',
     redirectTo: RouteKeys.Auth,
     pathMatch: 'full'

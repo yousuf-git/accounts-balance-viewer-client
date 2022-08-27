@@ -19,7 +19,7 @@ export class ViewBalanceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchAccounts().subscribe(this.setAccounts);
+    this.fetchAccounts().subscribe(this.setAccounts.bind(this));
   }
 
   public fetchAccounts(): Observable<GetAccountsResponse> {

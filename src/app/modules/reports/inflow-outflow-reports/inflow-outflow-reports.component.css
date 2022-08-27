@@ -1,0 +1,23 @@
+.container > :first-child {
+  margin-bottom: 30px;
+}
+
+.card-panel-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.year-selector {
+  width: 90px;
+}
+
+:host ::ng-deep .mat-form-field-wrapper {
+  margin: 0 !important;
+  padding: 0;
+}
+
+table {
+  width: 100%;
+}
