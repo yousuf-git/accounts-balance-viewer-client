@@ -17,7 +17,8 @@ export enum Endpoints {
   FetchMonthlyInflowOutflowStats = 'stats/balance-change-by-months',
   FetchAnnualInflowOutflowStats = 'stats/balance-change-by-years',
   FetchMonthlyAccumulationStats = 'stats/balance-by-months',
-  FetchAnnualAccumulationStats = 'stats/balance-by-years'
+  FetchAnnualAccumulationStats = 'stats/balance-by-years',
+  FetchFirstOperationYear = 'stats/first-operation-year'
 }
 
 export enum Mime {

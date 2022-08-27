@@ -1,3 +1,19 @@
 <div class="page container">
+
+  <div class="nav">
+    <a [routerLink]="['monthly-inflow-outflow']" routerLinkActive="active">
+      Monthly Inflow/Outflow
+    </a>
+    <a [routerLink]="['annual-inflow-outflow']" routerLinkActive="active">
+      Annual Inflow/Outflow
+    </a>
+    <a [routerLink]="['monthly-accumulation']" routerLinkActive="active">
+      Monthly Accumulation
+    </a>
+    <a [routerLink]="['annual-accumulation']" routerLinkActive="active">
+      Annual Accumulation
+    </a>
+  </div>
+
   <router-outlet></router-outlet>
 </div>

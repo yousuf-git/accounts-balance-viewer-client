@@ -8,6 +8,7 @@ import {GetMonthlyInflowOutflowStatsResponse} from "../models/responses/get-mont
 import {GetAnnualInflowOutflowStatsResponse} from "../models/responses/get-annual-inflow-outflow-stats-response";
 import {GetMonthlyAccumulationStatsResponse} from "../models/responses/get-monthly-accumulation-stats-response";
 import {GetAnnualAccumulationStatsResponse} from "../models/responses/get-annual-accumulation-stats-response";
+import {GetFirstOperationYear} from "../models/responses/get-first-operation-year";
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +57,9 @@ export class CoreService {
 
   public getAnnualAccumulationStats(): Observable<GetAnnualAccumulationStatsResponse> {
     return this.http.get<GetAnnualAccumulationStatsResponse>(Endpoints.FetchAnnualAccumulationStats);
+  }
+
+  public getFirstOperationYear(): Observable<GetFirstOperationYear> {
+    return this.http.get<GetFirstOperationYear>(Endpoints.FetchFirstOperationYear);
   }
 }
