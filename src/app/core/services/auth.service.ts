@@ -4,7 +4,6 @@ import {AuthRequest} from "../models/requests/auth-request";
 import {AuthResponse} from "../models/responses/auth-response";
 import {CookieService} from "ngx-cookie-service";
 import {BehaviorSubject, catchError, Observable, tap, throwError} from "rxjs";
-import {Router} from "@angular/router";
 import {User} from "../models/entities/user";
 import {Endpoints} from "../constants";
 
@@ -19,7 +18,7 @@ export class AuthService {
 
   public authStateChanged = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, private cookie: CookieService, private router: Router) {
+  constructor(private http: HttpClient, private cookie: CookieService) {
     const token = this.cookie.get(this._authTokenKey);
     const userData = localStorage.getItem(this._userDataKey);
 
@@ -59,7 +58,7 @@ export class AuthService {
 
   public signOut() {
     this.revokeAuth();
-    this.router.navigate(['./']);
+    this.authStateChanged.next(false);
   }
 
   public getUser(): User | null {
@@ -79,6 +78,5 @@ export class AuthService {
   private revokeAuth() {
     this.cookie.delete(this._authTokenKey);
     localStorage.removeItem(this._userDataKey);
-    this.authStateChanged.next(false);
   }
 }
