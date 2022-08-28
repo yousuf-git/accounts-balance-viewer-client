@@ -180,4 +180,40 @@ export class UploadBalanceComponent implements OnInit {
     this.processFile(file);
   }
 
+  public downloadTemplate(template: 'excel' | 'text') {
+    let templatePath = ''
+    let filename = '';
+
+    if (template === 'excel') {
+      templatePath = 'assets/templates/template.xlsx';
+      filename = 'template.xlsx'
+    } else {
+      templatePath = 'assets/templates/template.txt';
+      filename = 'template.txt'
+    }
+
+    fetch(templatePath)
+      .then(response => response.blob())
+      .then(blob => this.downloadBlob(blob, filename));
+  }
+
+  private downloadBlob(blob: Blob, name: string) {
+    const blobUrl = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = name;
+
+    document.body.appendChild(link);
+
+    link.dispatchEvent(
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      })
+    );
+
+    document.body.removeChild(link);
+  }
 }

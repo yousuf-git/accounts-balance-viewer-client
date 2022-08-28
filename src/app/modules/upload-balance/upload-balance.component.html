@@ -2,6 +2,16 @@
   <mat-card class="card-panel upload-panel">
     <div class="card-panel-header">
       <span class="title">Upload Balances</span>
+
+      <button mat-raised-button color="accent" [matMenuTriggerFor]="downloadTemplateMenu">
+        Download template
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #downloadTemplateMenu="matMenu">
+        <button mat-menu-item (click)="downloadTemplate('excel')">Excel template (.xlsx)</button>
+        <button mat-menu-item (click)="downloadTemplate('text')">Tab-seperated text template (.txt)</button>
+      </mat-menu>
+
     </div>
 
     <div class="drop-area" (click)="fileUploadControl.click()" (dragover)="$event.preventDefault()"

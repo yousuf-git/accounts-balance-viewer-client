@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+.card-panel-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .drop-area {
   border: 3px dashed #dadada;
   border-radius: 10px;
