@@ -1,5 +1,6 @@
 Account	Balance
-Account #1	3200
-Account #2	4500
-Account #3	9000
-
+R&D	43000
+Canteen	54000
+CEO's car	72000
+Marketing	93000
+Parking fines	78000
