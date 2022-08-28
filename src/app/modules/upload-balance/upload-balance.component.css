@@ -35,7 +35,8 @@
 }
 
 .card.invalid {
-  background: rgba(255, 0, 0, 0.18);
+  background: rgb(255 0 0 / 50%);
+  color: white;
 }
 
 .card-name {
@@ -57,12 +58,14 @@
 }
 
 .upload-icon {
-  width: 40px;
+  width: auto;
+  height: auto;
+  font-size: 60px;
   margin-bottom: 15px;
 }
 
 .or-text {
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 10px;
   margin-bottom: 10px;
 }

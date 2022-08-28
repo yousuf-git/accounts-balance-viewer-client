@@ -17,8 +17,8 @@
     <div class="drop-area" (click)="fileUploadControl.click()" (dragover)="$event.preventDefault()"
          (dragenter)="onDragStart($event)" (drop)="onDrop($event)" (dragend)="onDragEnd($event)">
       <div>
-        <img class="upload-icon" src="assets/upload.png">
-        <p>Drop your text or excel file here.
+        <mat-icon class="upload-icon">upload_file</mat-icon>
+        <p>Drop your excel or text file here
         <p class="or-text">OR</p>
         <div class="browse-files-button">Browse files</div>
       </div>
@@ -39,12 +39,12 @@
 
       <span *ngIf="allowUpload" class="alert success">
         <mat-icon>check_outline</mat-icon>
-        <span>You can upload</span>
+        <span>You can upload!</span>
       </span>
 
       <span *ngIf="!allowUpload" class="alert warn">
         <mat-icon>info_outline</mat-icon>
-        <span>Found invalid accounts, please remove them to proceed upload.</span>
+        <span>Found invalid accounts, please remove them to proceed to upload.</span>
       </span>
 
       <div class="card-container">

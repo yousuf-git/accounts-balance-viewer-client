@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppRoutingModule} from "./app-routing.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from "@angular/material/snack-bar";
 import {CommonInterceptor} from "./core/interceptors/common.interceptor";
 import {ErrorInterceptor} from "./core/interceptors/error.interceptor";
 import {NavbarComponent} from './shared/navbar/navbar.component';
@@ -40,6 +40,10 @@ import {MatMenuModule} from "@angular/material/menu";
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true
+    },
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {duration: 2500, panelClass: 'snack'}
     }
   ],
   bootstrap: [AppComponent]

@@ -146,7 +146,7 @@ export class UploadBalanceComponent implements OnInit {
     this._coreService.addEntries(entries).subscribe(_ => {
       this.importedAccounts = [];
       this.allowUpload = false;
-      this._snackbar.open('Upload balances successfully!');
+      this._snackbar.open('Uploaded balances successfully!');
     });
   }
 
@@ -164,7 +164,7 @@ export class UploadBalanceComponent implements OnInit {
 
     const type = event.dataTransfer?.files[0]?.type;
     if (type !== Mime.Excel && type !== Mime.PlainText) {
-      this._snackbar.open('File type must be .txt or .xlsx');
+      this._snackbar.open('File must be an excel (.xlsx) or a text (.txt) file');
     }
 
     this.processFile(event.dataTransfer!.files[0]);

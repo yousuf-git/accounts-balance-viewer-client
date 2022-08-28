@@ -40,6 +40,11 @@ mat-card.card-panel {
   display: block;
 }
 
+.snack {
+  color: white;
+  background: #232F3E;
+}
+
 /* alert */
 .alert {
   display: flex;

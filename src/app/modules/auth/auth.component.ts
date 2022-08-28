@@ -30,9 +30,7 @@ export class AuthComponent implements OnInit {
 
   public onSubmit() {
     if (this.authForm.invalid) {
-      this._snackBar.open(`Please enter both username and password`, 'OK', {
-        duration: 3 * 1_000
-      });
+      this._snackBar.open('Please enter both username and password');
 
       return;
     }
@@ -42,15 +40,11 @@ export class AuthComponent implements OnInit {
     this._authService.auth(username!, password!)
       .subscribe({
         next: value => {
-          this._snackBar.open(`Welcome ${value.name}`, 'OK', {
-            duration: 3 * 1_000
-          });
+          this._snackBar.open(`Welcome ${value.name}!`);
 
           this.navigateToDefault(value.role);
         },
-        error: _ => this._snackBar.open(`Invalid username or password`, 'OK', {
-          duration: 3 * 1_000
-        })
+        error: _ => this._snackBar.open('Invalid username or password')
       })
   }
 
