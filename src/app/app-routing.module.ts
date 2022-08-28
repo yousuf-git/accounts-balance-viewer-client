@@ -13,6 +13,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/view-balance/view-balance.module').then(mod => mod.ViewBalanceModule),
     canActivate: [AuthGuard],
     data: {
+      uiText: 'View Balance',
       roles: [UserRole.User, UserRole.Admin]
     }
   },
@@ -21,6 +22,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/upload-balance/upload-balance.module').then(mod => mod.UploadBalanceModule),
     canActivate: [AuthGuard],
     data: {
+      uiText: 'Upload Balance',
       roles: [UserRole.Admin]
     }
   },
@@ -29,6 +31,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/reports/reports.module').then(mod => mod.ReportsModule),
     canActivate: [AuthGuard],
     data: {
+      uiText: 'Reports',
       roles: [UserRole.Admin]
     }
   },

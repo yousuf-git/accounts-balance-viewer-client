@@ -48,7 +48,7 @@ export class AuthComponent implements OnInit {
 
           this.navigateToDefault(value.role);
         },
-        error: err => this._snackBar.open(`Invalid username or password`, 'OK', {
+        error: _ => this._snackBar.open(`Invalid username or password`, 'OK', {
           duration: 3 * 1_000
         })
       })
@@ -57,7 +57,7 @@ export class AuthComponent implements OnInit {
   private navigateToDefault(role: UserRole) {
     switch (role) {
       case UserRole.Admin:
-        this._router.navigate([Routes.UploadBalance]);
+        this._router.navigate([Routes.ViewBalance]);
         break;
       case UserRole.User:
         this._router.navigate([Routes.ViewBalance]);
