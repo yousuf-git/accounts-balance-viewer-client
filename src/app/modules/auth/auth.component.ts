@@ -1,16 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../../core/services/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {Routes, UserRole} from "../../core/constants";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
+
+  private _subscriptions = new Subscription();
 
   public authForm = this._fb.nonNullable.group({
     username: ['', Validators.required],
@@ -28,6 +31,10 @@ export class AuthComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
+  }
+
   public onSubmit() {
     if (this.authForm.invalid) {
       this._snackBar.open('Please enter both username and password');
@@ -37,7 +44,7 @@ export class AuthComponent implements OnInit {
 
     const {username, password} = this.authForm.value;
 
-    this._authService.auth(username!, password!)
+    const subscription = this._authService.auth(username!, password!)
       .subscribe({
         next: value => {
           this._snackBar.open(`Welcome ${value.name}!`);
@@ -45,7 +52,9 @@ export class AuthComponent implements OnInit {
           this.navigateToDefault(value.role);
         },
         error: _ => this._snackBar.open('Invalid username or password')
-      })
+      });
+
+    this._subscriptions.add(subscription);
   }
 
   private navigateToDefault(role: UserRole) {

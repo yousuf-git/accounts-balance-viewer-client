@@ -1,16 +1,18 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {AuthService} from "../../core/services/auth.service";
 import {Route, Router} from "@angular/router";
 import {UserRole} from "../../core/constants";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
 
   @Output() signOut = new EventEmitter<void>();
+  private _subscriptions = new Subscription();
 
   public routes: { path: string, text: string }[] = [];
 
@@ -18,8 +20,12 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.authStateChanged
-      .subscribe(this.resolveAuthorizedRoutes.bind(this));
+    const subscription = this.authService.authStateChanged.subscribe(this.resolveAuthorizedRoutes.bind(this));
+    this._subscriptions.add(subscription);
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
   }
 
   private resolveAuthorizedRoutes() {

@@ -1,16 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CoreService} from "../../../core/services/core.service";
 import {
   GetMonthlyInflowOutflowStatsResponse
 } from "../../../core/models/responses/get-monthly-inflow-outflow-stats-response";
 import {EChartSeriesOptions} from "../../../core/types";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-monthly-inflow-outflow-report',
   templateUrl: './monthly-inflow-outflow-report.component.html',
   styleUrls: ['./monthly-inflow-outflow-report.component.css']
 })
-export class MonthlyInflowOutflowReportComponent implements OnInit {
+export class MonthlyInflowOutflowReportComponent implements OnInit, OnDestroy {
+
+  private _subscriptions = new Subscription();
 
   public readonly months = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -30,20 +33,26 @@ export class MonthlyInflowOutflowReportComponent implements OnInit {
     this.fetchFirstOperationYear();
   }
 
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
+  }
+
   public onYearChange(year: any) {
     this.fetchMonthlyInflowOutflowStats(year);
   }
 
   private fetchMonthlyInflowOutflowStats(year: number) {
-    this._coreService.getMonthlyInflowOutflowStats(year)
+    const subscription = this._coreService.getMonthlyInflowOutflowStats(year)
       .subscribe(response => {
         this.drawTable(response);
         this.drawChart(response);
       });
+
+    this._subscriptions.add(subscription);
   }
 
   private fetchFirstOperationYear() {
-    this._coreService.getFirstOperationYear()
+    const subscription = this._coreService.getFirstOperationYear()
       .subscribe(response => {
         this.minYear = response.year;
 
@@ -53,7 +62,9 @@ export class MonthlyInflowOutflowReportComponent implements OnInit {
         }
 
         this.availableYears = years;
-      })
+      });
+
+    this._subscriptions.add(subscription);
   }
 
   private drawTable(data: GetMonthlyInflowOutflowStatsResponse) {

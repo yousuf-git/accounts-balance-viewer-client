@@ -1,17 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CoreService} from "../../../core/services/core.service";
 import {EChartSeriesOptions} from "../../../core/types";
 import {
   GetMonthlyAccumulationStatsResponse
 } from "../../../core/models/responses/get-monthly-accumulation-stats-response";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-monthly-accumulation-report',
   templateUrl: './monthly-accumulation-report.component.html',
   styleUrls: ['./monthly-accumulation-report.component.css']
 })
-export class MonthlyAccumulationReportComponent implements OnInit {
+export class MonthlyAccumulationReportComponent implements OnInit, OnDestroy {
 
+  private _subscriptions = new Subscription();
 
   public readonly months = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -31,20 +33,26 @@ export class MonthlyAccumulationReportComponent implements OnInit {
     this.fetchFirstOperationYear();
   }
 
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
+  }
+
   public onYearChange(year: any) {
     this.fetchMonthlyAccumulationStats(year);
   }
 
   private fetchMonthlyAccumulationStats(year: number) {
-    this._coreService.getMonthlyAccumulationStats(year)
+    const subscription = this._coreService.getMonthlyAccumulationStats(year)
       .subscribe(response => {
         this.drawTable(response);
         this.drawChart(response);
       });
+
+    this._subscriptions.add(subscription);
   }
 
   private fetchFirstOperationYear() {
-    this._coreService.getFirstOperationYear()
+    const subscription = this._coreService.getFirstOperationYear()
       .subscribe(response => {
         this.minYear = response.year;
 
@@ -55,6 +63,8 @@ export class MonthlyAccumulationReportComponent implements OnInit {
 
         this.availableYears = years;
       })
+
+    this._subscriptions.add(subscription);
   }
 
   private drawTable(data: GetMonthlyAccumulationStatsResponse) {

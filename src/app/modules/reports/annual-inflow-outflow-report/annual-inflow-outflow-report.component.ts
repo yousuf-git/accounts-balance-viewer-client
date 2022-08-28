@@ -1,18 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CoreService} from "../../../core/services/core.service";
 import {
   GetAnnualInflowOutflowStatsResponse
 } from "../../../core/models/responses/get-annual-inflow-outflow-stats-response";
 import {EChartSeriesOptions} from "../../../core/types";
 import {GetFirstOperationYear} from 'src/app/core/models/responses/get-first-operation-year';
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-annual-inflow-outflow-report',
   templateUrl: './annual-inflow-outflow-report.component.html',
   styleUrls: ['./annual-inflow-outflow-report.component.css']
 })
-export class AnnualInflowOutflowReportComponent implements OnInit {
+export class AnnualInflowOutflowReportComponent implements OnInit, OnDestroy {
+
+  private _subscriptions = new Subscription();
 
   public minYear = new Date().getFullYear() - 2;
 
@@ -25,18 +27,27 @@ export class AnnualInflowOutflowReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchFirstOperationYear().subscribe(response => {
-      this.minYear = response.year;
-      this.fetchAnnualInflowOutflowStats();
-    });
+    const subscription = this.fetchFirstOperationYear()
+      .subscribe(response => {
+        this.minYear = response.year;
+        this.fetchAnnualInflowOutflowStats();
+      });
+
+    this._subscriptions.add(subscription);
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
   }
 
   private fetchAnnualInflowOutflowStats() {
-    this._coreService.getAnnualInflowOutflowStats()
+    const subscription = this._coreService.getAnnualInflowOutflowStats()
       .subscribe(response => {
         this.drawTable(response);
         this.drawChart(response);
       });
+
+    this._subscriptions.add(subscription);
   }
 
   private fetchFirstOperationYear(): Observable<GetFirstOperationYear> {

@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CoreService} from "../../../core/services/core.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {GetFirstOperationYear} from "../../../core/models/responses/get-first-operation-year";
 import {EChartSeriesOptions} from "../../../core/types";
 import {
@@ -12,8 +12,9 @@ import {
   templateUrl: './annual-accumulation-report.component.html',
   styleUrls: ['./annual-accumulation-report.component.css']
 })
-export class AnnualAccumulationReportComponent implements OnInit {
+export class AnnualAccumulationReportComponent implements OnInit, OnDestroy {
 
+  private _subscriptions = new Subscription();
 
   public minYear = new Date().getFullYear() - 2;
 
@@ -26,18 +27,27 @@ export class AnnualAccumulationReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchFirstOperationYear().subscribe(response => {
-      this.minYear = response.year;
-      this.fetchAccumulationStats();
-    });
+    const subscription = this.fetchFirstOperationYear()
+      .subscribe(response => {
+        this.minYear = response.year;
+        this.fetchAccumulationStats();
+      });
+
+    this._subscriptions.add(subscription);
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
   }
 
   private fetchAccumulationStats() {
-    this._coreService.getAnnualAccumulationStats()
+    const subscription = this._coreService.getAnnualAccumulationStats()
       .subscribe(response => {
         this.drawTable(response);
         this.drawChart(response);
       });
+
+    this._subscriptions.add(subscription);
   }
 
   private fetchFirstOperationYear(): Observable<GetFirstOperationYear> {
