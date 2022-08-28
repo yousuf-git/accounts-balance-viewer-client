@@ -70,13 +70,13 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    const token = this.cookie.get(this._authTokenKey);
-
-    return token != '' && this._userData != null;
+    const token = this.cookie.check(this._authTokenKey);
+    return token && this._userData != null;
   }
 
   private revokeAuth() {
     this.cookie.delete(this._authTokenKey);
     localStorage.removeItem(this._userDataKey);
+    this._userData = undefined;
   }
 }
