@@ -60,10 +60,10 @@ export class AuthComponent implements OnInit, OnDestroy {
   private navigateToDefault(role: UserRole) {
     switch (role) {
       case UserRole.Admin:
-        this._router.navigate([Routes.ViewBalance]);
+        this._router.navigate([Routes.Overview]);
         break;
       case UserRole.User:
-        this._router.navigate([Routes.ViewBalance]);
+        this._router.navigate([Routes.Overview]);
         break;
     }
   }

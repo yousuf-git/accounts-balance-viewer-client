@@ -9,20 +9,20 @@ const routes: Routes = [
     loadChildren: () => import('./modules/auth/auth.module').then(mod => mod.AuthModule),
   },
   {
-    path: RouteKeys.ViewBalance,
+    path: RouteKeys.Overview,
     loadChildren: () => import('./modules/view-balance/view-balance.module').then(mod => mod.ViewBalanceModule),
     canActivate: [AuthGuard],
     data: {
-      uiText: 'View Balance',
+      uiText: 'Overview',
       roles: [UserRole.User, UserRole.Admin]
     }
   },
   {
-    path: RouteKeys.UploadBalance,
+    path: RouteKeys.UploadBalances,
     loadChildren: () => import('./modules/upload-balance/upload-balance.module').then(mod => mod.UploadBalanceModule),
     canActivate: [AuthGuard],
     data: {
-      uiText: 'Upload Balance',
+      uiText: 'Upload Balances',
       roles: [UserRole.Admin]
     }
   },

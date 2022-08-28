@@ -5,8 +5,8 @@ export enum UserRole {
 
 export enum Routes {
   Auth = 'auth',
-  UploadBalance = 'upload-balance',
-  ViewBalance = 'view-balance',
+  UploadBalances = 'upload-balances',
+  Overview = 'overview',
   Reports = 'reports'
 }
 
