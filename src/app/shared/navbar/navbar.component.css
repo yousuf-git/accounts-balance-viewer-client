@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: end;
-  background: rgb(3, 155, 229);
-  height: 130px;
+  background: #232F3E;
+  height: 150px;
   padding-bottom: 14px;
   box-sizing: border-box;
   position: sticky;
@@ -24,29 +24,47 @@
 .logo {
   width: 35px;
   margin-right: 8px;
+  object-fit: contain;
 }
 
 .logo-container {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   display: flex;
-  align-items: center;
+  align-items: start;
+}
+
+.logo-text-container span:first-child {
+  display: block;
+  line-height: 1;
+  font-weight: bold;
+  letter-spacing: 4px;
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.logo-text-container span:last-child {
+  display: block;
+  font-size: 15px;
+  line-height: 1;
+  color: #d5d5d5;
 }
 
 a {
-  color: white;
+  color: #bbbbbb;
   text-decoration: none;
   font-size: 15px;
   margin-right: 5px;
   padding: 8px 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   transition: .3s;
+  border-bottom: 2px solid transparent;
 }
 
 a:hover {
-  color: rgba(255, 255, 255, 0.83);
+  color: white;
 }
 
 a.active {
-  background: white;
-  color: black;
+  color: white;
+  border-color: #FEBD69;
 }

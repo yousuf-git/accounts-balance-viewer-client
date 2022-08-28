@@ -4,7 +4,10 @@
       <div>
         <div class="logo-container">
           <img src="assets/currency.png" class="logo">
-          <span>Accounts Balance Viewer</span>
+          <div class="logo-text-container">
+            <span>ABV</span>
+            <span>Accounts Balance Viewer</span>
+          </div>
         </div>
         <div>
           <a *ngFor="let route of routes" [routerLink]="[route.path]" routerLinkActive="active">

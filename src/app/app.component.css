@@ -4,7 +4,15 @@
 
 .container {
   background: #f1f1f1;
-  min-height: calc(100vh - 130px);
+  min-height: calc(100vh - 150px);
   padding: 50px 0;
   box-sizing: border-box;
+}
+
+:host ::ng-deep .mat-flat-button.mat-accent:not(.mat-button-disabled),
+:host ::ng-deep .mat-raised-button.mat-accent:not(.mat-button-disabled),
+:host ::ng-deep .mat-fab.mat-accent:not(.mat-button-disabled),
+:host ::ng-deep .mat-mini-fab.mat-accent:not(.mat-button-disabled) {
+  background-color: #FEBD69;
+  color: black;
 }

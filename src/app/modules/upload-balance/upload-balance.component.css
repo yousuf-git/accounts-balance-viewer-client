@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-.card-panel-header {
+.upload-panel .card-panel-header {
   display: flex;
   justify-content: space-between;
 }
@@ -30,7 +30,7 @@
 
 .card {
   width: 100%;
-  background: rgba(49, 226, 43, 0.05);
+  background: rgba(43, 162, 226, 0.09);
   box-sizing: border-box;
 }
 
@@ -68,9 +68,8 @@
 }
 
 .browse-files-button {
-  border-radius: 6px;
-  font-weight: 500;
-  background: rgb(3, 155, 229);
+  border-radius: 4px;
+  background: #232F3E;
   display: inline-block;
   padding: 8px 12px;
   font-size: 15px;
