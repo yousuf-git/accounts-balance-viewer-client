@@ -1,12 +1,13 @@
 .card-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 60px;
+  grid-gap: 20px;
 }
 
 .card {
   width: 100%;
-  background: rgba(49, 226, 43, 0.05);
+  background: rgba(43, 162, 226, 0.09);
+  box-sizing: border-box;
 }
 
 .card-name {

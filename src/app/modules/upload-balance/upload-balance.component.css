@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+.upload-panel .card-panel-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .drop-area {
   border: 3px dashed #dadada;
   border-radius: 10px;
@@ -25,12 +30,13 @@
 
 .card {
   width: 100%;
-  background: rgba(49, 226, 43, 0.05);
+  background: rgba(43, 162, 226, 0.09);
   box-sizing: border-box;
 }
 
 .card.invalid {
-  background: rgba(255, 0, 0, 0.18);
+  background: rgb(255 0 0 / 50%);
+  color: white;
 }
 
 .card-name {
@@ -52,20 +58,21 @@
 }
 
 .upload-icon {
-  width: 40px;
+  width: auto;
+  height: auto;
+  font-size: 60px;
   margin-bottom: 15px;
 }
 
 .or-text {
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .browse-files-button {
-  border-radius: 6px;
-  font-weight: 500;
-  background: rgb(3, 155, 229);
+  border-radius: 4px;
+  background: #232F3E;
   display: inline-block;
   padding: 8px 12px;
   font-size: 15px;

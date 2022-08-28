@@ -4,6 +4,11 @@ import {Endpoints} from "../constants";
 import {Observable} from "rxjs";
 import {GetAccountsResponse} from "../models/responses/get-accounts-response";
 import {Entry} from "../models/entities/entry";
+import {GetMonthlyInflowOutflowStatsResponse} from "../models/responses/get-monthly-inflow-outflow-stats-response";
+import {GetAnnualInflowOutflowStatsResponse} from "../models/responses/get-annual-inflow-outflow-stats-response";
+import {GetMonthlyAccumulationStatsResponse} from "../models/responses/get-monthly-accumulation-stats-response";
+import {GetAnnualAccumulationStatsResponse} from "../models/responses/get-annual-accumulation-stats-response";
+import {GetFirstOperationYear} from "../models/responses/get-first-operation-year";
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +37,29 @@ export class CoreService {
 
   public addEntries(entries: Entry[]): Observable<{}> {
     return this.http.post(Endpoints.AddEntries, entries);
+  }
+
+  public getMonthlyInflowOutflowStats(year: number): Observable<GetMonthlyInflowOutflowStatsResponse> {
+    return this.http.get<GetMonthlyInflowOutflowStatsResponse>(Endpoints.FetchMonthlyInflowOutflowStats, {
+      params: {year}
+    });
+  }
+
+  public getAnnualInflowOutflowStats(): Observable<GetAnnualInflowOutflowStatsResponse> {
+    return this.http.get<GetAnnualInflowOutflowStatsResponse>(Endpoints.FetchAnnualInflowOutflowStats);
+  }
+
+  public getMonthlyAccumulationStats(year: number): Observable<GetMonthlyAccumulationStatsResponse> {
+    return this.http.get<GetMonthlyAccumulationStatsResponse>(Endpoints.FetchMonthlyAccumulationStats, {
+      params: {year}
+    });
+  }
+
+  public getAnnualAccumulationStats(): Observable<GetAnnualAccumulationStatsResponse> {
+    return this.http.get<GetAnnualAccumulationStatsResponse>(Endpoints.FetchAnnualAccumulationStats);
+  }
+
+  public getFirstOperationYear(): Observable<GetFirstOperationYear> {
+    return this.http.get<GetFirstOperationYear>(Endpoints.FetchFirstOperationYear);
   }
 }

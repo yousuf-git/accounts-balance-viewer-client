@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Reader, Row} from "../../core/lib/reader";
 import {XlxsReader} from "../../core/lib/xlxs-reader";
 import {TsvReader} from "../../core/lib/tsv-reader";
@@ -7,7 +7,7 @@ import {Account} from "../../core/models/entities/account";
 import {CoreService} from "../../core/services/core.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Entry} from "../../core/models/entities/entry";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 type ImportedAccount = Account & { valid: boolean }
 
@@ -16,7 +16,9 @@ type ImportedAccount = Account & { valid: boolean }
   templateUrl: './upload-balance.component.html',
   styleUrls: ['./upload-balance.component.css']
 })
-export class UploadBalanceComponent implements OnInit {
+export class UploadBalanceComponent implements OnInit, OnDestroy {
+
+  private _subscriptions = new Subscription();
 
   @ViewChild('fileUploadControl') fileUploadControl?: ElementRef<HTMLInputElement>;
   @ViewChild('reviewCard') reviewCard?: ElementRef<HTMLElement>;
@@ -29,13 +31,19 @@ export class UploadBalanceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchAccountNames().subscribe(this.setAccountNamesIdsMap.bind(this));
+    this._subscriptions.add(
+      this.fetchAccountNames().subscribe(this.setAccountNamesIdsMap.bind(this))
+    );
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
   }
 
   // Fetch accounts and sets to the accounts state.
   public fetchAccountNames(): Observable<Account[]> {
     return new Observable<Account[]>(subscriber => {
-      this._coreService.getAccounts()
+      const subscription = this._coreService.getAccounts()
         .subscribe({
           next: accounts => {
             subscriber.next(accounts);
@@ -44,6 +52,7 @@ export class UploadBalanceComponent implements OnInit {
           error: _ => this._snackbar.open('Something went wrong while fetching accounts')
         });
 
+      this._subscriptions.add(subscription);
     });
   }
 
@@ -63,31 +72,33 @@ export class UploadBalanceComponent implements OnInit {
       return;
     }
 
-    // todo: handle unsub
-    reader.read(file).subscribe(grid => {
-      const [isValid, errorMessage] = this.validateGridFormat(grid);
+    const subscription = reader.read(file)
+      .subscribe(grid => {
+        const [isValid, errorMessage] = this.validateGridFormat(grid);
 
-      if (!isValid) {
-        this._snackbar.open(errorMessage);
-        this.fileUploadControl!.nativeElement!.value = '';
-        return;
-      }
+        if (!isValid) {
+          this._snackbar.open(errorMessage);
+          this.fileUploadControl!.nativeElement!.value = '';
+          return;
+        }
 
-      // remove the header row from the grid
-      grid.shift();
+        // remove the header row from the grid
+        grid.shift();
 
-      this.importedAccounts = grid.map<ImportedAccount>(row => ({
-        id: this.accountNamesIdsMap.get(row[0].toString()) ?? 0,
-        name: row[0].toString(),
-        balance: Number(row[1]),
-        valid: this.accountNamesIdsMap.has(row[0].toString())
-      }));
+        this.importedAccounts = grid.map<ImportedAccount>(row => ({
+          id: this.accountNamesIdsMap.get(row[0].toString()) ?? 0,
+          name: row[0].toString(),
+          balance: Number(row[1]),
+          valid: this.accountNamesIdsMap.has(row[0].toString())
+        }));
 
-      this.allowUpload = this.isAllImportedAccountsValid(this.importedAccounts);
-      setTimeout(() => this.reviewCard?.nativeElement.scrollIntoView({
-        behavior: 'smooth'
-      }), 0);
-    });
+        this.allowUpload = this.isAllImportedAccountsValid(this.importedAccounts);
+        setTimeout(() => this.reviewCard?.nativeElement.scrollIntoView({
+          behavior: 'smooth'
+        }), 0);
+      });
+
+    this._subscriptions.add(subscription);
   }
 
   public removeImportedAccount(index: number) {
@@ -143,11 +154,13 @@ export class UploadBalanceComponent implements OnInit {
       amount: account.balance
     }));
 
-    this._coreService.addEntries(entries).subscribe(_ => {
+    const subscription = this._coreService.addEntries(entries).subscribe(_ => {
       this.importedAccounts = [];
       this.allowUpload = false;
-      this._snackbar.open('Upload balances successfully!');
+      this._snackbar.open('Uploaded balances successfully!');
     });
+
+    this._subscriptions.add(subscription);
   }
 
   public onDragStart(event: DragEvent) {
@@ -164,7 +177,7 @@ export class UploadBalanceComponent implements OnInit {
 
     const type = event.dataTransfer?.files[0]?.type;
     if (type !== Mime.Excel && type !== Mime.PlainText) {
-      this._snackbar.open('File type must be .txt or .xlsx');
+      this._snackbar.open('File must be an excel (.xlsx) or a text (.txt) file');
     }
 
     this.processFile(event.dataTransfer!.files[0]);
@@ -180,4 +193,40 @@ export class UploadBalanceComponent implements OnInit {
     this.processFile(file);
   }
 
+  public downloadTemplate(template: 'excel' | 'text') {
+    let templatePath = ''
+    let filename = '';
+
+    if (template === 'excel') {
+      templatePath = 'assets/templates/template.xlsx';
+      filename = 'template.xlsx'
+    } else {
+      templatePath = 'assets/templates/template.txt';
+      filename = 'template.txt'
+    }
+
+    fetch(templatePath)
+      .then(response => response.blob())
+      .then(blob => this.downloadBlob(blob, filename));
+  }
+
+  private downloadBlob(blob: Blob, name: string) {
+    const blobUrl = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = name;
+
+    document.body.appendChild(link);
+
+    link.dispatchEvent(
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      })
+    );
+
+    document.body.removeChild(link);
+  }
 }

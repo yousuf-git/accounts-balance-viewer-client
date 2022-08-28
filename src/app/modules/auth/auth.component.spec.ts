@@ -77,7 +77,7 @@ describe('AuthComponent', () => {
     component['navigateToDefault'].call(component, UserRole.Admin)
 
     // assert
-    expect(fakeRouter.navigate).toHaveBeenCalledOnceWith([Routes.UploadBalance]);
+    expect(fakeRouter.navigate).toHaveBeenCalledOnceWith([Routes.Overview]);
   });
 
   it('navigates to expected user role (user) on navigate to default', () => {
@@ -85,7 +85,7 @@ describe('AuthComponent', () => {
     component['navigateToDefault'].call(component, UserRole.User)
 
     // assert
-    expect(fakeRouter.navigate).toHaveBeenCalledOnceWith([Routes.ViewBalance]);
+    expect(fakeRouter.navigate).toHaveBeenCalledOnceWith([Routes.Overview]);
   });
 
 });

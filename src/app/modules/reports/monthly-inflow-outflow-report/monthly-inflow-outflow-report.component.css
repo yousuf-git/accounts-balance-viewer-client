@@ -1,0 +1,29 @@
+.card-panel-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.year-selector {
+  width: 90px;
+}
+
+:host ::ng-deep .mat-form-field-wrapper {
+  margin: 0 !important;
+  padding: 0;
+}
+
+.chart {
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 24px;
+  background: white;
+  font-weight: 500;
+}

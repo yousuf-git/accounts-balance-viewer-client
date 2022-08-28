@@ -5,6 +5,7 @@ import {UploadBalanceRoutingModule} from "./upload-balance-routing.module";
 import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [UploadBalanceComponent],
@@ -13,7 +14,8 @@ import {MatIconModule} from "@angular/material/icon";
     UploadBalanceRoutingModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
   ]
 })
 export class UploadBalanceModule {

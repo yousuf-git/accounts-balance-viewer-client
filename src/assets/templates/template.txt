@@ -1,0 +1,6 @@
+Account	Balance
+R&D	43000
+Canteen	54000
+CEO's car	72000
+Marketing	93000
+Parking fines	78000

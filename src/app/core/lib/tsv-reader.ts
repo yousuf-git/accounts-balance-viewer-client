@@ -2,19 +2,21 @@ import {Reader, Row} from "./reader";
 import {Observable} from "rxjs";
 
 export class TsvReader implements Reader {
+
   public read(file: File): Observable<Row[]> {
     const reader = new FileReader();
     reader.readAsText(file);
+
     return new Observable<Row[]>(subscriber => {
       reader.onload = e => {
         let rawText = e.target!.result as string;
         rawText = rawText.trim();
         const rows = rawText.split('\n');
-        const matrix = rows.map(value => value.split('\t'))
+        const grid = rows.map(value => value.split('\t'))
 
-        const parsedMatrix: Row[] = [];
+        const parsedGrid: Row[] = [];
 
-        for (const row of matrix) {
+        for (const row of grid) {
           if (row.length === 0) continue;
 
           const newRow: Row = [];
@@ -23,10 +25,10 @@ export class TsvReader implements Reader {
             newRow.push(this.castToPrimitive(cell));
           }
 
-          parsedMatrix.push(newRow);
+          parsedGrid.push(newRow);
         }
 
-        subscriber.next(parsedMatrix);
+        subscriber.next(parsedGrid);
         subscriber.complete();
       }
     });

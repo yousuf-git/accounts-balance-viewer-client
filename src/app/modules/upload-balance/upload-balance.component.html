@@ -2,13 +2,23 @@
   <mat-card class="card-panel upload-panel">
     <div class="card-panel-header">
       <span class="title">Upload Balances</span>
+
+      <button mat-raised-button color="accent" [matMenuTriggerFor]="downloadTemplateMenu">
+        Download template
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #downloadTemplateMenu="matMenu">
+        <button mat-menu-item (click)="downloadTemplate('excel')">Excel template (.xlsx)</button>
+        <button mat-menu-item (click)="downloadTemplate('text')">Tab-seperated text template (.txt)</button>
+      </mat-menu>
+
     </div>
 
     <div class="drop-area" (click)="fileUploadControl.click()" (dragover)="$event.preventDefault()"
          (dragenter)="onDragStart($event)" (drop)="onDrop($event)" (dragend)="onDragEnd($event)">
       <div>
-        <img class="upload-icon" src="assets/upload.png">
-        <p>Drop your text or excel file here.
+        <mat-icon class="upload-icon">upload_file</mat-icon>
+        <p>Drop your excel or text file here
         <p class="or-text">OR</p>
         <div class="browse-files-button">Browse files</div>
       </div>
@@ -29,19 +39,19 @@
 
       <span *ngIf="allowUpload" class="alert success">
         <mat-icon>check_outline</mat-icon>
-        <span>You can upload</span>
+        <span>You can upload!</span>
       </span>
 
       <span *ngIf="!allowUpload" class="alert warn">
         <mat-icon>info_outline</mat-icon>
-        <span>Found invalid accounts, please remove them to proceed upload.</span>
+        <span>Found invalid accounts, please remove them to proceed to upload.</span>
       </span>
 
       <div class="card-container">
         <mat-card class="card" [ngClass]="{'invalid': !account.valid }"
                   *ngFor="let account of importedAccounts; let i = index">
           <span class="card-name">{{ account.name }}</span>
-          <span class="card-amount">{{ account.balance | currency }}</span>
+          <span class="card-amount">{{ account.balance | currency:'LKR ' }}</span>
           <button mat-icon-button class="card-delete-button" (click)="removeImportedAccount(i)" *ngIf="!account.valid">
             <mat-icon>close</mat-icon>
           </button>

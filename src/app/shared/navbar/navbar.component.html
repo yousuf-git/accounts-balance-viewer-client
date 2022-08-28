@@ -2,23 +2,23 @@
   <div class="page">
     <mat-toolbar class="tool-bar">
       <div>
-        <div class="logo-container">
+        <div class="logo-container" [routerLink]="['/']">
           <img src="assets/currency.png" class="logo">
-          <span>Accounts Balance Viewer</span>
+          <div class="logo-text-container">
+            <span>ABV</span>
+            <span>Accounts Balance Viewer</span>
+          </div>
         </div>
         <div>
-          <a [routerLink]="['view-balance']" routerLinkActive="active">
-            Account Balances
-          </a>
-          <a [routerLink]="['upload-balance']" routerLinkActive="active">
-            Upload Balances
+          <a *ngFor="let route of routes" [routerLink]="[route.path]" routerLinkActive="active">
+            {{ route.text }}
           </a>
         </div>
       </div>
 
       <span class="spacer"></span>
 
-      <button mat-icon-button *ngIf="_authSerivce.authStateChanged | async" [matMenuTriggerFor]="menu"
+      <button mat-icon-button *ngIf="authService.authStateChanged | async" [matMenuTriggerFor]="menu"
               aria-label="Example icon-button with a menu">
         <mat-icon>menu</mat-icon>
       </button>

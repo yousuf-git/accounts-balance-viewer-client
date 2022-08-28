@@ -40,6 +40,11 @@ mat-card.card-panel {
   display: block;
 }
 
+.snack {
+  color: white;
+  background: #232F3E;
+}
+
 /* alert */
 .alert {
   display: flex;
@@ -49,6 +54,7 @@ mat-card.card-panel {
   font-size: 15px;
   padding: 13px 18px;
   border-radius: 4px;
+  background: #232F3E;
 }
 
 .alert mat-icon {
@@ -56,8 +62,12 @@ mat-card.card-panel {
 }
 
 .alert.warn {
-  background: #ff6666;
+  background: #232F3E;
   border: #ff4141;
+}
+
+.alert.warn mat-icon {
+  color: #ff3072;
 }
 
 .alert.success {

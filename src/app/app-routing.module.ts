@@ -9,18 +9,29 @@ const routes: Routes = [
     loadChildren: () => import('./modules/auth/auth.module').then(mod => mod.AuthModule),
   },
   {
-    path: RouteKeys.ViewBalance,
+    path: RouteKeys.Overview,
     loadChildren: () => import('./modules/view-balance/view-balance.module').then(mod => mod.ViewBalanceModule),
     canActivate: [AuthGuard],
     data: {
+      uiText: 'Overview',
       roles: [UserRole.User, UserRole.Admin]
     }
   },
   {
-    path: RouteKeys.UploadBalance,
+    path: RouteKeys.UploadBalances,
     loadChildren: () => import('./modules/upload-balance/upload-balance.module').then(mod => mod.UploadBalanceModule),
     canActivate: [AuthGuard],
     data: {
+      uiText: 'Upload Balances',
+      roles: [UserRole.Admin]
+    }
+  },
+  {
+    path: RouteKeys.Reports,
+    loadChildren: () => import('./modules/reports/reports.module').then(mod => mod.ReportsModule),
+    canActivate: [AuthGuard],
+    data: {
+      uiText: 'Reports',
       roles: [UserRole.Admin]
     }
   },

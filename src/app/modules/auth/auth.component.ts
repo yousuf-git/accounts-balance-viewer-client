@@ -1,16 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../../core/services/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {Routes, UserRole} from "../../core/constants";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
+
+  private _subscriptions = new Subscription();
 
   public authForm = this._fb.nonNullable.group({
     username: ['', Validators.required],
@@ -28,39 +31,39 @@ export class AuthComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
+  }
+
   public onSubmit() {
     if (this.authForm.invalid) {
-      this._snackBar.open(`Please enter both username and password`, 'OK', {
-        duration: 3 * 1_000
-      });
+      this._snackBar.open('Please enter both username and password');
 
       return;
     }
 
     const {username, password} = this.authForm.value;
 
-    this._authService.auth(username!, password!)
+    const subscription = this._authService.auth(username!, password!)
       .subscribe({
         next: value => {
-          this._snackBar.open(`Welcome ${value.name}`, 'OK', {
-            duration: 3 * 1_000
-          });
+          this._snackBar.open(`Welcome ${value.name}!`);
 
           this.navigateToDefault(value.role);
         },
-        error: err => this._snackBar.open(`Invalid username or password`, 'OK', {
-          duration: 3 * 1_000
-        })
-      })
+        error: _ => this._snackBar.open('Invalid username or password')
+      });
+
+    this._subscriptions.add(subscription);
   }
 
   private navigateToDefault(role: UserRole) {
     switch (role) {
       case UserRole.Admin:
-        this._router.navigate([Routes.UploadBalance]);
+        this._router.navigate([Routes.Overview]);
         break;
       case UserRole.User:
-        this._router.navigate([Routes.ViewBalance]);
+        this._router.navigate([Routes.Overview]);
         break;
     }
   }
