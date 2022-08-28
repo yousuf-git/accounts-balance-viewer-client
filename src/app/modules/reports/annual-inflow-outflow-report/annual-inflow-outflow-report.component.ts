@@ -125,7 +125,11 @@ export class AnnualInflowOutflowReportComponent implements OnInit {
           show: false,
         },
       },
-      yAxis: {},
+      yAxis: {
+        axisLabel: {
+          formatter: (value: number) => value.toLocaleString('en-US', {style: 'currency', currency: 'LKR'})
+        }
+      },
       series: [...seriesList],
       animationEasing: 'elasticOut',
       animationDelayUpdate: (idx: number) => idx * 5,

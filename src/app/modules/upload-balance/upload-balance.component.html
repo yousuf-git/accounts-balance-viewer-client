@@ -51,7 +51,7 @@
         <mat-card class="card" [ngClass]="{'invalid': !account.valid }"
                   *ngFor="let account of importedAccounts; let i = index">
           <span class="card-name">{{ account.name }}</span>
-          <span class="card-amount">{{ account.balance | currency }}</span>
+          <span class="card-amount">{{ account.balance | currency:'LKR ' }}</span>
           <button mat-icon-button class="card-delete-button" (click)="removeImportedAccount(i)" *ngIf="!account.valid">
             <mat-icon>close</mat-icon>
           </button>

@@ -7,7 +7,7 @@
   <div class="card-container">
     <mat-card class="card" *ngFor="let account of accounts">
       <span class="card-name">{{ account.name }}</span>
-      <span class="card-amount">{{ account.balance | currency }}</span>
+      <span class="card-amount">{{ account.balance | currency:'LKR ' }}</span>
     </mat-card>
   </div>
 </mat-card>
